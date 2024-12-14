@@ -1,6 +1,11 @@
+import Product from "./components/Product";
+
+
 function App() {
   return <div id="app" className="container">
-    Hello
+    <Product />
+    <Product />
+    <Product />
   </div>
 }
 
