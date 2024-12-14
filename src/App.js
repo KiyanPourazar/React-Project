@@ -1,11 +1,11 @@
 import Product from "./components/Product";
 
 
-function App() {
-  return <div id="app" className="container">
-    <Product />
-    <Product />
-    <Product />
+const App = () => {
+  return <div className="container">
+    <Product title="Book 1" />
+    <Product title="Book 2"/>
+    <Product title="KP"/>
   </div>
 }
 
