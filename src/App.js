@@ -1,12 +1,23 @@
-import Product from "./components/Product";
-
+import { useState } from "react";
+import ProductList from "./components/ProductList/ProductList";
 
 const App = () => {
-  return <div className="container">
-    <Product title="Book 1" />
-    <Product title="Book 2"/>
-    <Product title="KP"/>
-  </div>
-}
+  const [products, setProducts] = useState([
+    { id: 1, title: 'Book 1' },
+    { id: 2, title: 'Book 2' },
+    { id: 3, title: 'Book 3' },
+  ]);
 
-export default App
+  const deletePtoduct = (id) => {
+    setProducts(products.filter((item) => item.id !== id))
+
+    }
+
+  return (
+    <div className="container">
+      <ProductList products={products} onDelete={deletePtoduct} />
+    </div>
+  );
+};
+
+export default App;
