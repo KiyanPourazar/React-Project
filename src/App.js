@@ -1,27 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductList from "./components/ProductList/ProductList";
-import AppProduct from "./components/AddProduct/AddProduct";
 import AddProduct from "./components/AddProduct/AddProduct";
 
 const App = () => {
-  const [products, setProducts] = useState([
-    { id: 1, title: 'Book 1' },
-    { id: 2, title: 'Book 2' },
-    { id: 3, title: 'Book 3' },
-  ]);
+  const [products, setProducts] = useState([]);
 
-  const addProduct = (title) => {
-    const id = Math.floor(Math.random() * 1000)
+  useEffect(() => {
+    const sendRequest = async () => {
+      const response = await fetch('http://localhost:8000/products')
 
-    const newProduct = {id, ...title}
+      const responeData = await response.json()
 
-    setProducts([...products, newProduct])
+      setProducts(responeData)
+    }
+    sendRequest()
+  }, [])
+
+  const addProduct = async(title) => {
+    const response = await fetch('http://localhost:8000/products', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(title),
+    })
+
+    const responseData = await response.json()
+
+    setProducts([...products, responseData])
   }
 
-  const deletePtoduct = (id) => {
+  const deletePtoduct = async(id) => {
+    await fetch(`http://localhost:8000/products/${id}`, {
+      method: 'DELETE',
+    })
+
     setProducts(products.filter((item) => item.id !== id))
-
-
     }
 
   return (
